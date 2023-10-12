@@ -4,6 +4,7 @@ import com.gdsc3.webboard.answer.Answer;
 import com.gdsc3.webboard.answer.AnswerRepository;
 import com.gdsc3.webboard.question.Question;
 import com.gdsc3.webboard.question.QuestionRepository;
+import com.gdsc3.webboard.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,29 +25,18 @@ class WebBoardApplicationTests {
 	private QuestionRepository questionRepository;
 
 	@Autowired
+	private QuestionService questionService;
+
+	@Autowired
 	private AnswerRepository answerRepository;
 
 	@Test
 	void testJpa() {
-
-//		Question q1 = new Question();
-//		q1.setSubject("스프링부트 모델 질문입니다.");
-//		q1.setContent("id는 자동으로 생성되나요?");
-//		q1.setCreateDate(LocalDateTime.now());
-//		this.questionRepository.save(q1);  // 첫번째 질문 저장
-
-		Optional<Question> oq = this.questionRepository.findById(1L);
-		Question q = oq.get();
-
-		Answer a = new Answer();
-		a.setContent("네 자동으로 생성됩니다.");
-		a.setQuestion(q);
-		a.setCreateDate(LocalDateTime.now());
-		this.answerRepository.save(a);
-
-
-
-
+		for (int i = 1; i <= 300; i++) {
+			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+			String content = "내용무";
+			this.questionService.create(subject, content);
+		}
 	}
 
 
